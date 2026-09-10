@@ -10,12 +10,10 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Paragraph
 
-from .config import BingoConfig
-
 
 class BingoBoardPdf:
-    def __init__(self, config: BingoConfig):
-        self.config = config
+    def __init__(self, board_name: str):
+        self.board_name = board_name
 
     def render(
         self,
@@ -34,7 +32,7 @@ class BingoBoardPdf:
         pdf.drawCentredString(
             page_width / 2,
             page_height - 80,
-            self.config.name,
+            self.board_name,
         )
 
         # Person's name
@@ -62,8 +60,7 @@ class BingoBoardPdf:
                 x = margin + col * cell_width
                 y = top - (row + 1) * cell_height
 
-                # Free space styling
-                if board[row, col] == self.config.free_space:
+                if row == len(rows) / 2 and col == len(cols) / 2:
                     pdf.setFillColor(colors.lightgrey)
                     pdf.rect(
                         x,

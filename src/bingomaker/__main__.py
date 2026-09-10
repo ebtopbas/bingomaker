@@ -27,7 +27,7 @@ if __name__ == "__main__":
         config = BingoConfig.from_json(args.config)
 
     generator = BingoBoardGenerator(config)
-    renderer = BingoBoardPdf(config)
+    renderer = BingoBoardPdf(config.name)
 
     boards = generator.generate(len(config.people))
 
