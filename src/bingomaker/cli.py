@@ -48,7 +48,7 @@ def main(argv: list[str] | None = None) -> None:
 
     boards = generator.generate(len(config.people))
 
-    for name, board in zip(config.people, boards):
+    for name, board in zip(config.people, boards, strict=True):
         output_path = (
             args.output
             / _safe_path_component(config.name)
