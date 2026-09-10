@@ -12,8 +12,9 @@ from reportlab.platypus import Paragraph
 
 
 class BingoBoardPdf:
-    def __init__(self, board_name: str):
+    def __init__(self, board_name: str, has_free_space: bool):
         self.board_name = board_name
+        self.has_free_space = has_free_space
 
     def render(
         self,
@@ -60,7 +61,7 @@ class BingoBoardPdf:
                 x = margin + col * cell_width
                 y = top - (row + 1) * cell_height
 
-                if row == len(rows) / 2 and col == len(cols) / 2:
+                if self.has_free_space and row == rows // 2 and col == cols // 2:
                     pdf.setFillColor(colors.lightgrey)
                     pdf.rect(
                         x,

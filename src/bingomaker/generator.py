@@ -46,12 +46,13 @@ class BingoBoardGenerator:
 
         sentence_iter = iter(sentences)
 
-        free_row = rows // 2
-        free_col = cols // 2
+        free_cell = (
+            (rows // 2, cols // 2) if self.config.free_space is not None else None
+        )
 
         for row in range(rows):
             for col in range(cols):
-                if (row, col) == (free_row, free_col):
+                if (row, col) == free_cell:
                     board[row, col] = self.config.free_space
                 else:
                     board[row, col] = next(sentence_iter)
