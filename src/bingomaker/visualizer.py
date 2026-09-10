@@ -102,6 +102,9 @@ class BingoBoardPdf:
         width: float,
         height: float,
     ) -> None:
+        max_width = width - 12
+        max_height = height - 12
+
         for font_size in (10, 9, 8, 7):
             style = ParagraphStyle(
                 name="CellText",
@@ -113,16 +116,26 @@ class BingoBoardPdf:
             )
 
             paragraph = Paragraph(text, style)
-            text_width, text_height = paragraph.wrap(
-                width - 12,
-                height - 12,
-            )
+            text_width, text_height = paragraph.wrap(max_width, max_height)
 
-            if text_height <= height - 12:
+            if text_height <= max_height:
                 break
+
+        # Even the smallest font may not fit; clamp so the centering math
+        # stays sane and clip so any overflow can't bleed into other cells.
+        text_width = min(text_width, max_width)
+        text_height = min(text_height, max_height)
+
+        pdf.saveState()
+
+        clip_path = pdf.beginPath()
+        clip_path.rect(x, y, width, height)
+        pdf.clipPath(clip_path, stroke=0, fill=0)
 
         paragraph.drawOn(
             pdf,
             x + (width - text_width) / 2,
             y + (height - text_height) / 2,
         )
+
+        pdf.restoreState()
