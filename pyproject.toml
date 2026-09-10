@@ -27,4 +27,15 @@ dev = [
 ]
 
 [tool.ruff.lint]
-extend-select = ["I"]
+select = [
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "W",   # pycodestyle warnings
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear (likely bugs / footguns)
+    "SIM", # flake8-simplify
+    "C4",  # flake8-comprehensions
+    "PTH", # prefer pathlib over os.path
+    "RUF", # ruff-specific rules
+]
