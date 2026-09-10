@@ -66,11 +66,30 @@ class BingoConfig:
                 f"{', '.join(sorted(missing_keys))}"
             )
 
+        name = config["name"]
+        free_space = config.get("free_space")
+        sentences = config["sentences"]
+        people = config["people"]
+
+        if not isinstance(name, str):
+            raise TypeError(f"Config at {path}: 'name' must be a string")
+
+        if free_space is not None and not isinstance(free_space, str):
+            raise ValueError(f"Config at {path}: 'free_space' must be a string or null")
+
+        if not isinstance(sentences, list) or not all(
+            isinstance(s, str) for s in sentences
+        ):
+            raise ValueError(f"Config at {path}: 'sentences' must be a list of strings")
+
+        if not isinstance(people, list) or not all(isinstance(p, str) for p in people):
+            raise ValueError(f"Config at {path}: 'people' must be a list of strings")
+
         return cls(
-            name=config["name"],
-            free_space=config.get("free_space"),
-            sentences=config["sentences"],
-            people=config["people"],
+            name=name,
+            free_space=free_space,
+            sentences=sentences,
+            people=people,
         )
 
     @property
