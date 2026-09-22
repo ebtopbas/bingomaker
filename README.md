@@ -25,8 +25,13 @@ uv sync
 
 ## Usage
 
+`bingomaker` has two subcommands: `generate` (the default, for scripts and
+CI) and `tui` (an interactive board builder).
+
 ```sh
 uv run bingomaker --config path/to/config.json
+# equivalent to:
+uv run bingomaker generate --config path/to/config.json
 ```
 
 Options:
@@ -39,6 +44,27 @@ Options:
 
 PDFs are written to `<output>/<name>/<person>.pdf` for each person in the
 config.
+
+Run `uv run bingomaker --version` to print the installed version, or
+`uv run bingomaker --help` / `uv run bingomaker generate --help` for full
+option lists.
+
+### Interactive TUI
+
+```sh
+uv run bingomaker tui
+# or, to start from an existing config:
+uv run bingomaker tui --config path/to/config.json
+```
+
+This opens a terminal UI where you can:
+
+- Set the board name and toggle/edit the free space text.
+- Add or remove sentences and people, with live validation showing the
+  resulting board size (or explaining why the counts don't work).
+- Load or save a JSON config from within the app.
+- Generate PDFs directly, choosing the output directory and an optional
+  seed.
 
 ## Config format
 
