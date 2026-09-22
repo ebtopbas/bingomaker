@@ -5,6 +5,11 @@ import math
 from pathlib import Path
 
 
+def safe_path_component(value: str) -> str:
+    """Sanitize a name for use as a single path component (no separators)."""
+    return value.replace("/", "-").replace("\\", "-")
+
+
 class BingoConfig:
     name: str
     free_space: str | None
